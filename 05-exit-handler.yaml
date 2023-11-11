@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-world-
+spec:
+  entrypoint: whalesay
+  onExit: exit
+  templates:
+    - name: whalesay
+      container:
+        image: docker/whalesay:latest
+        command: [cowsay]
+        args: ["hello world"]
+    - name: exit
+      container:
+        image: docker/whalesay:latest
+        command: [cowsay]
+        args: ["exit template"]
