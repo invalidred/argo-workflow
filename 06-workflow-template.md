@@ -67,3 +67,38 @@ argo submit 06-workflow-partial-template-ref.yaml --watch
 # verify using logs
 argo logs @latest
 ```
+
+
+## To run template directly via `argo submit`
+
+You can run template directly using `workflowtemplate/<name>` as seen in following
+
+
+```bash
+argo submit --from workflowtemplate/add-example-template --watch`
+```
+
+
+## ClusterWorkflowTemplate
+
+If you want a WorkflowTemplate to be used across namespaces you need to create a `ClusterWorkflowTemplate`.
+
+You can create a `ClusterWorkflowTemplate` with the following command
+
+```bash
+argo cluster-template create <file-path>
+```
+
+Also you need to set the `clusterScope: true`
+
+```yaml
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: add-example-
+spec:
+  workflowTemplateRef:
+    name: add-example-template
+    clusterScope: true
+```
