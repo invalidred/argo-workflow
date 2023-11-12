@@ -1,0 +1,17 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  generateName: hello-world-
+spec:
+  schedule: "*/3 * * * *"
+  timezone: "America/Los_Angeles"
+  concurrencyPolicy: "Replace"
+  workflowSpec:
+    entrypoint: whalesay
+    templates:
+      - name: whalesay
+        container:
+          image: docker/whalesay:latest
+          command: [cowsay]
+          args: ["hello world"]
